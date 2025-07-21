@@ -1,14 +1,13 @@
 ---
 import { withISR } from '@repo/isr-cache';
 const { slug } = Astro.params;
-
 const post = await withISR(
   slug,
   async () => {
     const res = await fetch(`http://localhost:4000/api/posts/${slug}`);
     return await res.json();
   },
-  60
+  0
 );
 ---
 

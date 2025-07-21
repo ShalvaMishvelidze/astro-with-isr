@@ -2,7 +2,10 @@
 dist/
 # generated types
 .astro/
-
+.cache
+.cache/**/*
+.cache/*
+.cache/html/*
 # dependencies
 node_modules/
 
