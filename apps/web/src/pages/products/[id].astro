@@ -1,0 +1,28 @@
+---
+import { withISR } from "@repo/isr-cache";
+
+const { id } = Astro.params;
+
+const product = await withISR(
+  `/products/${id}`,
+  async () => {
+    const res = await fetch(`http://localhost:4000/api/products/${id}`);
+    console.log(res);
+    if (!res.ok) throw new Error("Failed to fetch product");
+    return await res.json();
+  },
+  60 * 60 // Revalidate every 1 hour
+);
+---
+
+<html>
+  <head>
+    <title>{product.title}</title>
+  </head>
+  <body>
+    <h1>{product.title}</h1>
+    <p>{product.description}</p>
+    <strong>${product.price}</strong>
+    <img src={product.thumbnail} alt="product" />
+  </body>
+</html>
